@@ -70,7 +70,7 @@ def get_all_advert(url):
 
 
 def main():
-    url = 'https://www.avito.ru/dagestan#login?s=h'
+    url = 'https://www.avito.ru/dagestan'
     html = get_html(url)
     soup = BeautifulSoup(html, 'lxml')
 
