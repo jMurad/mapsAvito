@@ -2,9 +2,11 @@ import requests
 from bs4 import BeautifulSoup
 import datetime
 import re
+from requests.auth import HTTPProxyAuth
 
 
 def get_html(url):
+    proxies = {'https': 'http://yahyaevml:Murad353694@172.19.96.51:9090'}
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36',
         'referer': f'{url}',
@@ -16,7 +18,7 @@ def get_html(url):
         'accept-language': 'ru,en-US;q=0.9,en;q=0.8'
     }
     s = requests.Session()
-    r = s.get(url, headers=headers)
+    r = s.get(url, headers=headers, proxies=proxies)
     print('0:', requests.utils.dict_from_cookiejar(r.cookies))
     print('1:', r.headers)
     # print('2:', r.text)
@@ -70,11 +72,15 @@ def get_all_advert(url):
 
 
 def main():
-    url = 'https://www.avito.ru/dagestan'
+    url = 'https://www.avito.ru/dagestan#login?s=h'
     html = get_html(url)
     soup = BeautifulSoup(html, 'lxml')
 
-    page = soup.find_all(re.findall("<script"), html)
+    page = re.findall(r"<script src=([\\d\\w]+)>", html)
+    print(page)
+
+
+
     # pages = page.find_all('a', class_='pagination-page')[-1]['href']
 
     # pages = soup.find('div', class_='grecaptcha-logo') # .find_all('iframe', name_='a-cac0m9fpvasg')[-1]['href']
@@ -82,7 +88,7 @@ def main():
     # file = open('content.html', 'w', encoding='utf-8')
     # file.write(html)
     # file.close()
-    print(page)
+
 
 
 if __name__ == '__main__':
