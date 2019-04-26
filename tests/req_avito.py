@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import datetime
 import re
+import brotli
 from requests.auth import HTTPProxyAuth
 
 
@@ -19,10 +20,9 @@ def get_html(url):
     }
     s = requests.Session()
     r = s.get(url, headers=headers, proxies=proxies)
-    print('0:', requests.utils.dict_from_cookiejar(r.cookies))
-    print('1:', r.headers)
-    # print('2:', r.text)
-    return r.text
+    # print('0:', requests.utils.dict_from_cookiejar(r.cookies))
+    # print('1:', r.headers)
+    return [r.text, r.content]
 
 
 def get_total_pages(html):
@@ -73,14 +73,21 @@ def get_all_advert(url):
 
 def main():
     url = 'https://www.avito.ru/dagestan#login?s=h'
-    html = get_html(url)
-    soup = BeautifulSoup(html, 'lxml')
+    html = get_html(url)[0]
+    # soup = BeautifulSoup(html, 'lxml')
 
-    page = re.findall(r"<script src=([\\d\\w]+)>", html)
-    print(page)
-
-
-
+    # page = soup.findall('script', src=re.compile(r"https://www.avito.st/s/cc/chunks/.*"))
+    page = re.findall(r'src="(https://www.avito.st/s/cc/chunks/.*?)"', html)
+    i = 0
+    for pg in page:
+        i += 1
+        htm = get_html(pg)
+        decompressed_data = str((brotli.decompress(htm[1])).decode('utf-8'))
+        # res = re.findall(r'c=t\?(".+?");', htm)
+        res = re.findall(r'c=t\?(".+?");', decompressed_data)
+        print("------------------------------")
+        print(pg)
+        print(res)
     # pages = page.find_all('a', class_='pagination-page')[-1]['href']
 
     # pages = soup.find('div', class_='grecaptcha-logo') # .find_all('iframe', name_='a-cac0m9fpvasg')[-1]['href']
