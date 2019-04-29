@@ -19,7 +19,7 @@ def get_html(url):
         'accept-language': 'ru,en-US;q=0.9,en;q=0.8'
     }
     s = requests.Session()
-    r = s.get(url, headers=headers, proxies=proxies)
+    r = s.get(url, headers=headers, proxies='')
     # print('0:', requests.utils.dict_from_cookiejar(r.cookies))
     # print('1:', r.headers)
     return [r.text, r.content]
@@ -78,16 +78,24 @@ def main():
 
     # page = soup.findall('script', src=re.compile(r"https://www.avito.st/s/cc/chunks/.*"))
     page = re.findall(r'src="(https://www.avito.st/s/cc/chunks/.*?)"', html)
+    soup = BeautifulSoup(html, 'lxml')
+    # jstoken = soup.find('input', class_='js-token')
+    jstoken = re.search(r'name="token\[([\d]+?)\]"\s+value="([\w\d]+?)"', html)
+    print(jstoken)
+    return 1
     i = 0
     for pg in page:
         i += 1
         htm = get_html(pg)
         decompressed_data = str((brotli.decompress(htm[1])).decode('utf-8'))
         # res = re.findall(r'c=t\?(".+?");', htm)
-        res = re.findall(r'c=t\?(".+?");', decompressed_data)
+        res = re.findall(r'c=t\?"(.+?)";', decompressed_data)
         print("------------------------------")
         print(pg)
-        print(res)
+        if res:
+            print(res[0].split('":"')[1])
+            break
+
     # pages = page.find_all('a', class_='pagination-page')[-1]['href']
 
     # pages = soup.find('div', class_='grecaptcha-logo') # .find_all('iframe', name_='a-cac0m9fpvasg')[-1]['href']
