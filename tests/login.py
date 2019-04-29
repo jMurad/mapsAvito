@@ -28,15 +28,15 @@ def get_recaptcha_response(googlekey, page_url):
             break
     return response.text.split('|')[1]
 
-url = 'https://www.avito.ru/dagestan#login?s=h'
+url = 'https://www.avito.ru/dagestan'
 headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.368'
                       '3.86 Safari/537.36',
-        'referer': f'{url}',
+        'referer': '{0}',
         'accept-encoding': 'gzip, deflate, br',
         'x-requested-with': 'XMLHttpRequest',
         'origin': 'https://www.avito.ru',
-        'cookie':   'u=2fdwrhq0.1dgwiyw.g0ebt8t2kn;'
+        'cookie':   'u={1};'
                     '_ga=GA1.2.787839117.1550752754;'
                     '_fbp=fb.1.1550752754027.1309230693;'
                     '_ym_uid=1550752754172788459;'
@@ -66,9 +66,9 @@ headers = {
                     '_nfh=2face4e4a88cd0abbf178edb1f17dd17;'
                     'crto_uid=97a7dde2fb1d8908a1f556470b3e332c;'
                     'anid=removed;'
-                    'sessid=03ea0023162507da7358abc483817f96.1556525078;'
-                    'v=1556534026;'
-                    'dfp_group=14;'
+                    'sessid={2};'
+                    'v={3};'
+                    'dfp_group={4};'
                     'abp=0;'
                     '_ym_visorc_34241905=b;'
                     'buyer_from_page=main',
@@ -77,14 +77,16 @@ headers = {
 }
 s = requests.Session()
 r = s.get(url, headers='', proxies='')
-# print(r.cookies['sessid'] + '\n' + r.cookies['v'])
+print(r.cookies['sessid'] + '\n' + r.cookies['v'])
 # print(r.headers['Set-Cookie'])
-# print(r.headers['Set-Cookie'].split(';')[0])
-# print(r.headers['Set-Cookie'].split(';')[7].split(',')[1])
-# print(r.headers['Set-Cookie'].split(';')[33].split(',')[1])
-j = json.loads('{'+r.headers['Set-Cookie']+'}')
-print(j['sessid'])
+sessid = r.headers['Set-Cookie'].split(';')[0].split('=')[1]
+u = r.headers['Set-Cookie'].split(';')[7].split(', ')[1].split('=')[1]
+dfp_group = r.headers['Set-Cookie'].split(';')[33].split(', ')[1].split('=')[1]
+print('sessid', sessid)
+print('u', u)
+print('dfp_group', dfp_group)
 html = r.text
+
 
 '''
 # jstoken[1] - token[###] and jstoken[2] - ####
