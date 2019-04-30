@@ -61,7 +61,7 @@ def get_recaptcha_response(googlekey, page_url):
     time.sleep(10)
     while 1:
         url_res = 'http://rucaptcha.com/res.php'
-        payload = {'key': '4fd259050808ba3aa49f5d8175675d3b',
+        payload = {'key': 'b6db28046b6e4788f65cb763e648dc27',
                    'action': 'get',
                    'id': captcha_id
                    }
