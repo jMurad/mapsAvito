@@ -3,7 +3,6 @@ import re
 import brotli
 import time
 import json
-from python_rucaptcha import ReCaptchaV2, RuCaptchaControl, CallbackClient
 
 
 def format_headers(url_, u_, sessid_, v_, dfp_group_):
@@ -62,8 +61,9 @@ def get_recaptcha_response(googlekey, page_url):
                'method': 'userrecaptcha',
                'googlekey': googlekey,
                'pageurl': page_url,
-               'proxy': 'user24145:eshj54@5.188.72.179:6676',
-               'proxytype': 'HTTPS',
+               'invisible': 1,
+               # 'proxy': 'user24145:eshj54@5.188.72.179:6676',
+               # 'proxytype': 'HTTPS',
                'debug_dump': 1
                }
     # b6db28046b6e4788f65cb763e648dc27
@@ -104,11 +104,11 @@ def rucaptcha(googlekey, url):
 
 headers = format_headers('https://www.avito.ru/dagestan', '2fhd5y1k.1dgwiyw.g2koc2mbwu',
                               '4990f9e889e44bd5fd27235af560fb83.1556607992', '1556607992', '30')
-proxies = {'http': 'http://user24145:eshj54@5.188.72.179:6676'}
+# proxies = {'http': 'http://user24145:eshj54@5.188.72.179:6676'}
 url_login = 'https://www.avito.ru/auth/login'
 url = 'https://www.avito.ru/dagestan'
 s = requests.Session()
-r = s.get(url, headers=headers, proxies=proxies)
+r = s.get(url, headers=headers, proxies='')
 print(r.headers['Set-Cookie'])
 v = r.cookies['v']
 sessid = r.headers['Set-Cookie'].split(';')[0].split('=')[1]
@@ -120,7 +120,7 @@ print('u', u)
 # print('dfp_group', dfp_group)
 jstoken = re.search(r'name="token\[([\d]+?)\]"\s+value="([\w\d]+?)"', r.text)
 googlekey = '6LekaEcUAAAAAHeBEnl8an4WEF2J8pSHZDebFTBZ'
-g_recaptcha_response = get_recaptcha_response(googlekey, url+'#login?s=h')
+g_recaptcha_response = get_recaptcha_response(googlekey, 'https://www.avito.ru/dagestan#login?s=h')
 html = r.text
 data = {'login': 'deit91@yandex.ru',
         'password': 'M3244dmk',
@@ -129,8 +129,8 @@ data = {'login': 'deit91@yandex.ru',
         'g-recaptcha-response': g_recaptcha_response
         }
 headers = format_headers(url, u, sessid, v, '30')
-r = s.post(url_login, headers=headers, proxies=proxies, data=data)
-print(r.text)
+# r = s.post(url_login, headers=headers, proxies=proxies, data=data)
+# print(r.text)
 '''
 # jstoken[1] - token[###] and jstoken[2] - ####
 jstoken = re.search(r'name="token\[([\d]+?)\]"\s+value="([\w\d]+?)"', html)

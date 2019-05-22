@@ -1,10 +1,12 @@
 import sys
 from PySide2.QtWidgets import QApplication, QStyle, QStyledItemDelegate, QGridLayout, QListView, QWidget
-from PySide2.QtCore import QUrl, QAbstractListModel, Qt, QModelIndex, QRectF, QSize
+from PySide2.QtCore import QUrl, QAbstractListModel, Qt, QModelIndex, QRectF, QSize, QTimer
 from PySide2.QtGui import QColor, QBrush, QPen, QPainter, QRadialGradient
 from PySide2.QtWebEngineWidgets import QWebEngineView, QWebEnginePage, QWebEngineProfile
 from PySide2.QtWebEngineCore import QWebEngineUrlRequestInterceptor
 # from PySide2 import QtNetwork
+import requests
+import time
 
 
 '''
@@ -114,6 +116,91 @@ class Delegate(QStyledItemDelegate):
             return Item.paint(painter, option, index)
 
 
+class Browser(QWebEngineView):
+    def __init__(self):
+        super().__init__()
+        self.loadFinished.connect(self._auth)
+
+        self._timer = QTimer()
+        self._timer.timeout.connect(self._check_captcha)
+
+    def _auth(self):
+        print("Start")
+        page = self.page()
+        # page.runJavaScript(
+        #     'document.querySelector( "a[href="#login?s=h"]" ).click();'
+        # )
+        page.runJavaScript(
+            '''document.querySelector('input[name="login"]').value = "{}"'''.format(
+                'deit91@yandex.ru'
+            )
+        )
+        print("1")
+        page.runJavaScript(
+            '''document.querySelector('input[name="password"]').value = "{}"'''.format(
+                'M3244dmk'
+            )
+        )
+        print("2")
+        captcha_resp = get_recaptcha_response('https://www.avito.ru/dagestan#login?s=h')
+        print("3")
+        page.runJavaScript(
+            '''document.querySelector('.g-recaptcha-response').innerHTML="{}"'''.format(
+                captcha_resp
+            )
+        )
+        print("4")
+        page.runJavaScript(
+            '''document.querySelector('.button-button-2Fo5k.button-size-m-7jtw4''' +
+            '''.button-primary-1RhOG.width-width-12-2VZLz').disabled=0'''
+        )
+        print("5")
+        self._timer.start(1000)
+
+    def _check_captcha(self):
+        print("button "
+              "click")
+        self._timer.stop()
+        self.page().runJavaScript(
+            '''document.querySelector( '.button-button-2Fo5k.button-size-m-7jtw4''' +
+            '''.button-primary-1RhOG.width-width-12-2VZLz' ).click()'''
+        )
+
+
+
+def get_recaptcha_response(page_url):
+    googlekey = '6LekaEcUAAAAAHeBEnl8an4WEF2J8pSHZDebFTBZ'
+    url_req = 'http://rucaptcha.com/in.php'
+    payload = {'key': 'b6db28046b6e4788f65cb763e648dc27',
+               'method': 'userrecaptcha',
+               'googlekey': googlekey,
+               'pageurl': page_url,
+               'invisible': 1,
+               # 'proxy': 'user24145:eshj54@5.188.72.179:6676',
+               # 'proxytype': 'HTTPS',
+               'debug_dump': 1
+               }
+    # b6db28046b6e4788f65cb763e648dc27
+    print('recaptcha:', googlekey, page_url)
+    request = requests.get(url_req, params=payload)
+    print(request.text)
+    captcha_id = request.text.split('|')[1]
+    print(captcha_id)
+    url_res = 'http://rucaptcha.com/res.php'
+    payload = {'key': 'b6db28046b6e4788f65cb763e648dc27',
+               'action': 'get',
+               'id': captcha_id
+               }
+    while 1:
+        time.sleep(10)
+
+        response = requests.get(url_res, params=payload)
+        print(response.text)
+        if response.text != 'CAPCHA_NOT_READY':
+            break
+    return response.text.split('|')[1]
+
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
 
@@ -124,19 +211,21 @@ if __name__ == "__main__":
     # QtNetwork.QNetworkProxy.setApplicationProxy(proxy)
 
     grid = QGridLayout()
-    browser = QWebEngineView()
+    # browser = QWebEngineView()
+    browser = Browser()
     # url_input = UrlInput(browser)
     list_view = QListView()
     list_view.setFixedWidth(300)
-    interceptor = WebEngineUrlRequestInterceptor()
-    profile = QWebEngineProfile()
-    profile.setRequestInterceptor(interceptor)
+    #  interceptor = WebEngineUrlRequestInterceptor()
+    #  profile = QWebEngineProfile()
+    #  profile.setRequestInterceptor(interceptor)
 
-    page = MyWebEnginePage(profile, browser)
+    #  page = MyWebEnginePage(profile, browser)
     # page.setUrl(QUrl("https://stackoverflow.com/questions/50786186/qwebengineurlrequestinterceptor-not-working"))
-    page.setUrl(QUrl("https://www.avito.ru/dagestan#login?s=h"))
-    browser.setPage(page)
+    #  page.setUrl(QUrl("https://www.avito.ru/dagestan#login?s=h"))
+    #  browser.setPage(page)
     # action_box = ActionInputBox(page)
+    browser.load(QUrl("https://www.avito.ru/dagestan#login?s=h"))
     grid.addWidget(list_view, 0, 1)
     grid.addWidget(browser, 0, 2)
     print('nuu4')
