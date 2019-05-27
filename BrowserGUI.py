@@ -119,10 +119,10 @@ class Delegate(QStyledItemDelegate):
 class Browser(QWebEngineView):
     def __init__(self):
         super().__init__()
-        self.loadFinished.connect(self._auth)
+        # self.loadFinished.connect(self._auth)
 
-        self._timer = QTimer()
-        self._timer.timeout.connect(self._check_captcha)
+        # self._timer = QTimer()
+        # self._timer.timeout.connect(self._check_captcha)
 
     def _auth(self):
         print("Start")
@@ -167,40 +167,6 @@ class Browser(QWebEngineView):
         )
 
 
-
-def get_recaptcha_response(page_url):
-    googlekey = '6LekaEcUAAAAAHeBEnl8an4WEF2J8pSHZDebFTBZ'
-    url_req = 'http://rucaptcha.com/in.php'
-    payload = {'key': 'b6db28046b6e4788f65cb763e648dc27',
-               'method': 'userrecaptcha',
-               'googlekey': googlekey,
-               'pageurl': page_url,
-               'invisible': 1,
-               # 'proxy': 'user24145:eshj54@5.188.72.179:6676',
-               # 'proxytype': 'HTTPS',
-               'debug_dump': 1
-               }
-    # b6db28046b6e4788f65cb763e648dc27
-    print('recaptcha:', googlekey, page_url)
-    request = requests.get(url_req, params=payload)
-    print(request.text)
-    captcha_id = request.text.split('|')[1]
-    print(captcha_id)
-    url_res = 'http://rucaptcha.com/res.php'
-    payload = {'key': 'b6db28046b6e4788f65cb763e648dc27',
-               'action': 'get',
-               'id': captcha_id
-               }
-    while 1:
-        time.sleep(10)
-
-        response = requests.get(url_res, params=payload)
-        print(response.text)
-        if response.text != 'CAPCHA_NOT_READY':
-            break
-    return response.text.split('|')[1]
-
-
 if __name__ == "__main__":
     app = QApplication(sys.argv)
 
@@ -225,7 +191,7 @@ if __name__ == "__main__":
     #  page.setUrl(QUrl("https://www.avito.ru/dagestan#login?s=h"))
     #  browser.setPage(page)
     # action_box = ActionInputBox(page)
-    browser.load(QUrl("https://www.avito.ru/dagestan#login?s=h"))
+    browser.load(QUrl("https://m.avito.ru/dagestan"))
     grid.addWidget(list_view, 0, 1)
     grid.addWidget(browser, 0, 2)
     print('nuu4')

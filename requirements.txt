@@ -16,7 +16,7 @@ PySide2==5.12.2
 PyTweening==1.0.3
 requests==2.21.0
 scipy==1.2.1
-selenium==3.141.0
+selenium==4.0.0a1
 shiboken2==5.12.2
 sip==4.19.8
 soupsieve==1.9

@@ -1,0 +1,53 @@
+{
+    "status": "ok",
+    "result": {
+        "user": {
+            "name": "Мурад",
+            "phone": "8 967 403-50-02",
+            "email": "deit91@yandex.ru",
+            "locationId": 647420,
+            "districtId": 384,
+            "id": 52612729,
+            "isPro": false,
+            "isLegalPerson": false,
+            "userHashId": "ca64004885bfe4e2c40b31def875547c",
+            "type": {
+                "code": "private",
+                "title": "Частное лицо"
+            }
+        },
+        "session": "17b2a21c67ebadfad3cdc33456d96b81.1557234846",
+        "signature": "afafafafafafafafafafafafafafafaf",
+        "phash": "ce0508ce5415c804cd2aafb714217ea6",
+        "refreshToken": "190c034b63e6603abd58eb3017df3ddb"
+    }
+}
+
+
+u=2fdwrhq0.1dgwiyw.g0ebt8t2kn;
+_ga=GA1.2.787839117.1550752754;
+_fbp=fb.1.1550752754027.1309230693;
+_ym_uid=1550752754172788459;
+_ym_d=1550752754;
+__gads=ID=aa4f41e1d4691557:T=1550752948:S=ALNI_MbcuKzt-jMpK82KekqS44Rvyw3YgQ;
+buyer_location_id=646710;
+__utmz=99926606.1551856488.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none);
+cto_lwid=331c2981-71ff-4c18-91b9-32e42a394852;
+buyer_selected_search_radius4=0_general;
+__utma=99926606.787839117.1550752754.1555507406.1556515479.3;
+_mlocation=647420;
+v=1558508039;
+dfp_group=43;
+f=5.0c4f4b6d233fb90636b4dd61b04726f147e1eada7172e06c47e1eada7172e06c47e1eada7172e06c47e1eada7172e06cb59320d6eb6303c1b59320d6eb6303c1b59320d6eb6303c147e1eada7172e06c8a38e2c5b3e08b898a38e2c5b3e08b890df103df0c26013a0df103df0c26013a2ebf3cb6fd35a0ac0df103df0c26013a0df103df0c26013ae2bfa4611aac769efa4d7ea84258c63d74c4a16376f87ccd897baa7410138eadfb0fb526bb39450a46b8ae4e81acb9fae2415097439d4047fb0fb526bb39450a46b8ae4e81acb9fa34d62295fceb188dd99271d186dc1cd03de19da9ed218fe2d50b96489ab264edd50b96489ab264edd50b96489ab264ed46b8ae4e81acb9fa51b1fde863bf5c12f8ee35c29834d631c9ba923b7b327da7e87a84e371fc60d21abab15028c5344d5e61d702b2ac73f71b4d31ba3578021fbae804e0bf5c02c086977b8878fcf22eb98f05791aec91c58732de926882853a9d9b2ff8011cc827c4d07ec9665f0b70915ac1de0d0341126e1723f83ba7c15fbb6572da8e9de6fc2da10fb74cac1eab2da10fb74cac1eab2d998d7a836f6518517083b9c0063862;
+_gid=GA1.2.1130770504.1558508042;
+_ym_isad=2;
+_ym_visorc_24618824=b;
+rheftjdd=rheftjddVal;
+anid=38052958e2147777232a2c62b6c80508%3B0;
+dfp_group=67;
+weborama-viewed=1;
+_ym_visorc_34241905=w;
+abp=0;
+_dc_gtm_UA-2546784-1=1;
+sessid=d8e8daad2865d8e4f1be3b47033af08f.1558513648;
+criteo_write_test=ChUIBBINbXlHb29nbGVSdGJJZBgBIAE;
