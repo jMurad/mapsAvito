@@ -123,15 +123,15 @@ if __name__ == '__main__':
     table.show()
     table.resize(400, 200)
 
-    headers = ['Normal', 'Delegate v1', 'Delegate v1 (without img)', 'Delegate v2']
+    headers = ['Normal', 'Delegate v1', 'Delegate v1 (without trash)', 'Delegate v2']
     table.setColumnCount(len(headers))
     table.setHorizontalHeaderLabels(headers)
     table.setRowCount(3)
     table.verticalHeader().hide()
 
-    pix_1 = QPixmap('img/favicon_google.png')
-    pix_2 = QPixmap('img/favicon_prog_org.png')
-    pix_3 = QPixmap('img/favicon_google_tr.png')
+    pix_1 = QPixmap('trash/favicon_google.png')
+    pix_2 = QPixmap('trash/favicon_prog_org.png')
+    pix_3 = QPixmap('trash/favicon_google_tr.png')
 
     for col in range(table.columnCount()):
         if col == 2:
