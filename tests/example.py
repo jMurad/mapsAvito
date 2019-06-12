@@ -1,13 +1,12 @@
 import xlrd
 
 
-
-path = r"C:\Users\yahyaevml\Desktop\for Muslim.xlsx"
+path = r"trash/data.xlsx"
 
 wb = xlrd.open_workbook(path)
 sheet = wb.sheet_by_index(0)
-print(sheet.cell_value(1, 1))
 
-# Extracting number of rows
-print(sheet.nrows)
+# print(sheet.row_values(0))
+baza = sheet.col_values(0)
+print(baza[0])
 
