@@ -6,7 +6,7 @@ fake-useragent==0.1.11
 idna==2.8
 lxml==4.3.2
 numpy==1.16.2
-Pillow==5.4.1
+Pillow==8.1.1
 PyAutoGUI==0.9.42
 PyGetWindow==0.0.4
 PyMsgBox==1.0.6
